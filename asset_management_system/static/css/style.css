@@ -1,0 +1,1139 @@
+/* تنسيق الصفحة بشكل عام */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+html {
+  height: 70vh !important;
+  width: 97vw;
+}
+
+.secend_container {
+  background-color: #f6f6f6;
+  display: inline-block;
+  position: relative;
+  padding: 20px;
+  width: 80vw;
+  height: 100vh;
+}
+
+.adress_name {
+  display: inline-block;
+  width: 100%;
+  background-color: hsl(200, 4%, 49%);
+  color: #fff;
+  margin-bottom: 3px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* الجزء العلوي من الصفحة */
+
+
+/* الجزء الأساسي من الصفحة */
+.main {
+  margin: 5px;
+  margin-right: 5px;
+  margin-right: 29px;
+}
+
+/* العناصر النصية في الجزء الأساسي */
+.main h1,
+.main h2,
+.main h3 {
+  color: #fff;
+}
+
+/* زر التحميل */
+.button {
+  background-color: #2980b9;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* footer */
+.main-footer {
+  background-color: #34495e;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.delete-row {
+  color: #e90f0f !important;
+}
+
+.sidebar {
+  width: 220px;
+  height: 100%;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  position: fixed;
+  top: 150px;
+  right: 5px;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+.p-5 {
+  padding: 3rem !important;
+  padding-right: 7rem !important;
+  padding-top: 7rem !important;
+}
+
+
+
+.invoice_field input,
+.invoice_field select,
+.invoice_field textarea {
+  display: table-cell;
+  width: 100%;
+  height: 100%;
+}
+
+.table_invoice td,
+.table_invoice th,
+.table_items td,
+.table_items th {
+  padding: 4px;
+  vertical-align: top;
+  border-top: 0.1px solid #dee2e6;
+}
+
+.table_invoice th {
+  color: #fff;
+}
+
+.table_items {
+  margin-top: 10px;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: hsl(200, 4%, 49%);
+  z-index: 1;
+}
+
+ 
+ 
+
+.main-header .nav-link {
+  height: 3.5rem;
+  position: relative;
+}
+
+.main-header .nav-link:hover {
+  color: #e90f0f;
+}
+
+.main-header .nav-link:active {
+  color: #11da3c;
+}
+
+.adress_header {
+  background-color: #11c24655;
+  margin-bottom: 5px;
+  border: 2px solid #333;
+}
+
+table td,
+table th {
+  white-space: wrap;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  display: table-cell;
+}
+
+/* تنسيق الصفحة بشكل عام */
+.container {
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #007bff;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.form-container {
+  margin-top: 20px;
+}
+
+.form-container .form-group {
+  margin-bottom: 15px;
+}
+
+.form-container label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.form-container textarea {
+  width: 100%;
+  height: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.form-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* تنسيق الجداول */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* تنسيق الأنماط الخاصة بالكود */
+.details {
+  margin-bottom: 15px;
+}
+
+.details summary {
+  font-weight: bold;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.formset_row_additiontax,
+.formset_row_minustax,
+.formset_row_expensescost,
+.formset_additems {
+  background-color: #f2f2f2;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* ألوان جديدة مستوحاة من برامج الحسابات */
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.adress_name {
+  display: inline-block;
+  width: 100%;
+  background-color: hsl(200, 4%, 49%);
+  color: #fff;
+  margin-bottom: 3px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+}
+
+
+
+.main {
+  margin: 5px;
+  margin-right: 5px;
+  margin-right: 29px;
+}
+
+.main h1,
+.main h2,
+.main h3 {
+  color: #fff;
+}
+
+.button {
+  background-color: #2980b9;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.main-footer {
+  background-color: #34495e;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.delete-row {
+  color: #e90f0f !important;
+}
+
+.sidebar {
+  width: 220px;
+  height: 100%;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  position: fixed;
+  top: 150px;
+  right: 5px;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+.p-5 {
+  padding: 3rem !important;
+  padding-right: 7rem !important;
+}
+
+.secend_container {
+  background-color: #f6f6f6;
+  display: inline-block;
+  position: relative;
+  padding: 20px;
+  width: 80vw;
+  height: 100vh;
+}
+
+.html {
+  height: 70vh !important;
+  width: 97vw;
+}
+
+.adress_header {
+  background-color: #11c24655;
+  margin-bottom: 5px;
+  border: 2px solid #333;
+}
+
+.table_invoice td,
+.table_invoice th,
+.table_items td,
+.table_items th {
+  padding: 4px;
+  vertical-align: top;
+  border-top: 0.1px solid #dee2e6;
+}
+
+.table_invoice th {
+  color: #fff;
+}
+
+.table_items {
+  margin-top: 10px;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: hsl(200, 4%, 49%);
+  z-index: 1;
+}
+
+.invoice_field input,
+.invoice_field select,
+.invoice_field textarea {
+  display: table-cell;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  max-width: 1140px;
+  display: inline-flex;
+  position: relative;
+  right: -64px;
+}
+
+.main-header .nav-link {
+  height: 3.5rem;
+  position: relative;
+}
+
+.main-header .nav-link:hover {
+  color: #e90f0f;
+}
+
+.main-header .nav-link:active {
+  color: #11da3c;
+}
+
+.adress_header {
+  background-color: #11c24655;
+  margin-bottom: 5px;
+  border: 2px solid #333;
+}
+
+.table td,
+.table th {
+  white-space: wrap;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  display: table-cell;
+}
+
+.container {
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1325px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #007bff;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.form-container {
+  margin-top: 20px;
+}
+
+.form-container .form-group {
+  margin-bottom: 15px;
+}
+
+.form-container label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.form-container textarea {
+  width: 100%;
+  height: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.form-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.details {
+  margin-bottom: 15px;
+}
+
+.details summary {
+  font-weight: bold;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.formset_row_additiontax,
+.formset_row_minustax,
+.formset_row_expensescost,
+.formset_additems {
+  background-color: #f2f2f2;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.adress_name {
+  display: inline-block;
+  width: 100%;
+  background-color: hsl(200, 4%, 49%);
+  color: #fff;
+  margin-bottom: 3px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.header {
+  background-color: #34495e;
+  color: #fff !important;
+  text-align: center;
+  padding-right: 10px;
+  width: 80%;
+}
+
+.main {
+  margin: 5px;
+  margin-right: 5px;
+  margin-right: 29px;
+}
+
+.main h1,
+.main h2,
+.main h3 {
+  color: #fff;
+}
+
+.button {
+  background-color: #2980b9;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.main-footer {
+  background-color: #34495e;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  width: 80%;
+}
+
+.delete-row {
+  color: #e90f0f !important;
+}
+
+.sidebar {
+  width: 220px;
+  height: 100%;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  position: fixed;
+  top: 150px;
+  right: 5px;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+.p-5 {
+  padding: 3rem !important;
+  padding-right: 7rem !important;
+}
+
+.secend_container {
+  background-color: #f6f6f6;
+  display: inline-block;
+  position: relative;
+  padding: 20px;
+  width: 80vw;
+  height: 100vh;
+}
+
+
+
+
+
+
+
+/*list*/
+
+
+.container_invoice {
+  direction: rtl;
+  padding: 20px;
+}
+
+.content-wrapper {
+  padding: 3rem;
+}
+
+.adress_name {
+  background-color: hsl(200, 4%, 49%);
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 3px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.row-1 span {
+  margin-right: 10px;
+}
+
+.edit,
+.delete {
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.delete {
+  background-color: #e90f0f;
+}
+
+p {
+  margin-top: 10px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+container
+
+
+/*delete*/
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content-wrapper {
+  max-width: 1000px;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed #ccc;
+  margin: 10px 0 20px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.wrapper::before,
+.wrapper::after {
+  content: '';
+  display: table;
+}
+
+.wrapper::after {
+  clear: both;
+}
+
+.wrapper {
+  zoom: 1;
+}
+
+.table-wrapper {
+  margin-top: 30px;
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrapper th,
+.table-wrapper td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.table-wrapper th {
+  background-color: #f2f2f2;
+}
+
+.table-wrapper td {
+  vertical-align: middle;
+}
+
+.table-wrapper tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-wrapper tr:hover {
+  background-color: #f5f5f5;
+}
+
+
+
+
+/*toolbar*/
+.toolbar {
+  background-color: #f8f9fa;
+  padding: 8px 245px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 99%;
+  
+
+}
+
+.toolbar .navbar {
+  padding: 0;
+  margin: 0;
+}
+
+.toolbar .navbar-nav .nav-item {
+  margin-right: 12px;
+}
+
+.toolbar .nav-link {
+  color: #343a40;
+  font-weight: bold;
+}
+
+.toolbar .nav-link:hover {
+  color: #0056b3;
+}
+
+/*monaoa*/
+.table-expe tr th, .table-expe tr td  {
+  padding: 10px 30px;
+}
+.add_destruction {
+  position: absolute;
+  background-color: #e90f0f;
+
+  top: 403px;
+  right: 210px;
+
+}
+
+.table_destruction  {
+  padding-top: 5px;
+}
+
+
+.calc_add_row, 
+.calc_add_row_one,
+.calc_button {
+  position: relative;
+  display: inline-block;
+  
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+.calc_add_row {
+  padding: 10px 20px;
+  background-color: #11c246;
+  top: 14px;
+  right: 10px;
+}
+.calc_add_row_one {
+  padding: 10px 20px;
+  background-color: #0056b3;
+  top: 14px;
+  right: 10px;
+}
+.calc_button {
+  padding: 10px 20px;
+  margin-right: 100px;
+  background-color: #254ebd;
+  top: 14px;
+  right: 10px;
+}
+.calc_add_row:hover {
+  background-color: #0e9c3b;
+}
+
+.calc_add_row:active {
+  background-color: #0b7c31;
+}
+
+
+
+.calc_add_row_one:hover {
+  background-color: #0e9c3b;
+}
+
+.calc_add_row_one:active {
+  background-color: #0b7c31;
+}
+.calc_button:hover {
+  background-color: #0e9c3b;
+}
+
+.calc_button:active {
+  background-color: #0b7c31;
+}
+
+.uii tr td.disabled, 
+.uii tr.disabled td, 
+.uii tr.disabled:hover, 
+.uii tr:hover td.disabled {
+  pointer-events: none;
+  color: rgba(185, 10, 10, 0.3);
+}
+
+.table-items {
+
+  width: 100%;
+  border-collapse: collapse;
+  display: table;
+  margin-top: 10px;
+}
+.table-items td {
+
+  
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+/* قم بتعيين هذا التنسيق للجدول */
+.my-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-custom-table th,
+.my-custom-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center; /* محاذاة نص الخلايا بالوسط */
+}
+
+/* قم بتعيين عرض الجدول القصوى لمنعه من الخروج عن الحدود */
+.my-custom-table-container {
+  width: 100%;
+  overflow-x: auto; /* إضافة شريط التمرير الأفقي إذا تجاوز عرض الجدول حجم العنصر الأب */
+}
+
+/* قد تضاف أنماط إضافية هنا بحسب حاجتك */
+.form_login {
+  margin-top: 20px;
+  margin-right: 324px;
+}
+.h2_login{
+  font-size: 1.71428571rem;
+  margin-right: 400px !important;
+}
+.button_login {
+
+  margin-right: 68px;
+  margin-bottom: 38px;
+}
+
+.form_signup {
+  margin-top: 20px;
+  margin-right: 300px;
+}
+
+
+
+
+/* تصميم العناصر النصية داخل التولبار */
+.navbar-nav .nav-link {
+  font-size: 16px; /* حجم النص */
+  color: #333; /* لون النص */
+  padding: 10px 20px; /* هامش داخلي للروابط */
+  transition: background-color 0.2s, color 0.2s; /* تأثير تدريجي عند تحويل الماوس */
+}
+
+/* تصميم العناصر النصية عند تمرير الماوس عليها */
+.navbar-nav .nav-link:hover {
+  background-color: #007bff; /* لون الخلفية عند تمرير الماوس */
+  color: #fff; /* لون النص عند تمرير الماوس */
+}
+
+/* تصميم الفواصل بين المجموعات */
+.navbar-nav hr {
+  border-top: 2px solid #ccc; /* سمك الخط */
+  margin: 10px 0; /* هامش بين الفواصل */
+}
+
+/* تصميم العناصر النصية المعطلة */
+.navbar-nav .nav-link.disabled {
+  opacity: 0.6; /* شفافية العنصر المعطل */
+  pointer-events: none; /* منع النقر على العنصر المعطل */
+}
+
+
+.adress_containt {
+  background-color: rgb(237, 100, 111);
+}
+.details {
+  
+  background-color: coral;
+  overflow: scroll;
+  
+}

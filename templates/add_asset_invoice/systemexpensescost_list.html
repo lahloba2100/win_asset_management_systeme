@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="direction: rtl;" class="col-10  container_group">
+        <div  class="content-wrapper p-5">
+            <h5 class="adress_name">قائمة اضافة المصروف : </h5>
+            <ul  class="">
+                <table class="table-expe">
+                    <tr>
+                        <th>الكود</th>
+                        <th>المصروف</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                    </tr>
+                    {% for field in object_list %}
+                    <tr>
+                        <li class="row-1">
+                            <td><span>{{ field.pk }}</span></td>
+                            <td><span>{{ field.system_expenses_cost }}</span></td>
+                            <td><a class=" coll-1 edit" href="{% url 'systemexpenses_cost_update' field.pk %}">تعديل</a></td>
+                            <td><a class="coll-2 delete" href="{% url 'systemexpenses_cost_delete' field.pk %}">حذف</a></td>
+                        </li>
+                    </tr>
+                    {% empty %}
+                    <li>No profile yet.</li>
+                    {% endfor %}
+                </table>
+            </ul>
+            <p>
+                <a href="{% url 'systemexpenses_cost' %}">اضافة ضريبة جديد </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

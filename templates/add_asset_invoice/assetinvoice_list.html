@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="direction: rtl;" class="col-12  container_invoice">
+        <div  class="content-wrapper p-5">
+            <h5 class="adress_name">قائمة الفواتير: </h5>
+            <form method="GET">
+                <label for="branch">اختر الفرع:</label>
+                <select id="branch" name="branch">
+                    <option value="">الكل</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.id }}" {% if branch.id == selected_branch %}selected{% endif %}>{{ branch.branch_name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit">عرض</button>
+            </form>
+            <ul>
+                <table class=" table-items">
+                    <tr>
+                        <th>الكود</th>
+                        <th>رقم</th>
+                        <th>اسم المورد</th>
+                        <th>عدد الاصناف</th>
+                        <th>التاريخ</th>
+                        <th>تكلفة الفاتورة</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                    </tr>
+                    {% for invoice in invoices %}
+                    <tr>
+                        <li  class="row-1">
+                            <td><span>{{ invoice.pk }} </span></td>
+                            <td><span>{{ invoice.invoice_number }} </span></td>
+                            <td><span>{{ invoice.supplier_name }}</span></td>
+                            <td><span>{{ invoice.total_items }}</span></td>
+                            <td><span>{{ invoice.invoice_date }}</span></td>
+                            <td><span>{{ invoice.total_price }}</span></td> 
+                            <td><a class="coll-1 edit" href="{% url 'invoice-update' invoice.pk %}">تعديل</a></td>
+                            <td><a class="coll-2 delete" href="{% url 'invoice-delete' invoice.pk %}">حذف</a></td>
+                        </li>
+                    </tr>
+                    {% empty %}
+                    <li>No profile yet.</li>
+                    {% endfor %}
+                </table>
+            </ul>
+            <p>
+                <a href="{% url 'invoice-add' %}">اضافة فاتورة جديدة</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

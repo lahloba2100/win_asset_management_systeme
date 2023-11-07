@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+<div  id="assettransfer-create" style="direction: rtl;" class="main container">
+    <div class="col-md-12 content-wrapper first_container">
+        <div class="second_container">
+            <div class="adress_name">
+                <h2>تحويل الاصول </h2>
+                <hr>
+            </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <details open=""><summary class="adress_header">بيانات التحويل</summary>
+                    <div class="invoice_feild table-container">
+                
+                        <!--{{ form.as_p }}-->
+                        <table class="table_invoice">
+                            <thead class="table_header">
+                                <tr>
+                                    <th>رقم الاصل</th>
+                                    <th>الفرع المصدر</th>
+                                    <th>الفرع الهف</th>
+                                    <th>تاريخ التحويل</th>
+                                    <th>البيان</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table_body">
+                                <tr >
+                                    <td>{{ form.asset }}</td>
+                                    <td>{{ form.source_branch }}</td>
+                                    <td>{{ form.destination_branch }}</td>
+                                    <td>{{form.transfer_date}}</td>
+                                    <td>{{form.transfer_title}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     </div>
+                </details>
+
+                <details open=""><summary class="adress_header">بيانات الاصل</summary>
+                    <div class="table_feild table-container">
+                    <table class="table_items table_destruction">
+                        {{ Transferasset.management_form }}
+                        {% for form in Transferasset.forms %}
+                        {% if forloop.first %}
+                        <thead>
+                            <tr class='invoice_field table_header'>
+                                {% for field in form.visible_fields %}
+                                <th>{{ field.label|capfirst }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        {% endif %}
+
+                        
+                        <tr class="{% cycle row1 row2 %}  invoice_field sticky-row table_body_additiontax">
+                         
+                                {% for field_addition in form.visible_fields %}
+                            <td>
+                                {# Include the hidden fields in the form #}
+                                {% if forloop.first %}
+                                {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                                {% endfor %}
+                                {% endif %}
+                                {{ field_addition.errors.as_ul }}
+                                {{ field_addition }}
+                                
+                            </td>
+                            {% endfor %}
+                         </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                </details>
+                
+                <details open=""><summary class="adress_header">بيانات الاهلاك</summary>
+                    <div class="table_feild table-container">
+                    <table class="table_items table_destruction">
+                        {{ TransferdestructionDetails.management_form }}
+                        {% for form in TransferdestructionDetails.forms %}
+                        {% if forloop.first %}
+                        <thead>
+                            <tr class='invoice_field table_header'>
+                                {% for field in form.visible_fields %}
+                                <th>{{ field.label|capfirst }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        {% endif %}
+
+                        
+                        <tr class="{% cycle row1 row2 %} formset_transferdestruction invoice_field sticky-row table_body_additiontax">
+                           
+                                {% for field_addition in form.visible_fields %}
+                            <td>
+                                {# Include the hidden fields in the form #}
+                                {% if forloop.first %}
+                                {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                                {% endfor %}
+                                {% endif %}
+                                {{ field_addition.errors.as_ul }}
+                                {{ field_addition }}
+                            </td>
+                            {% endfor %}
+                         </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                </details>
+               
+
+
+                <input type="hidden" name="action" value="create">
+                <input type="submit"  class="btn btn-primary row_empty" value="إنشاء">
+                 <a id="removeRoww" class="row_empty" href="javascript:void(0)">الغاء الصفوف </a>
+                </form>
+
+
+
+
+        </div>
+    </div>
+</div>
+  
+{% endblock %}

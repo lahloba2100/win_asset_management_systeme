@@ -1,0 +1,32 @@
+.invoice {
+    background-color: cornflowerblue;
+    padding: 10px;
+    max-width: 1164px;
+    }
+    .coll-1 {
+        position: relative;
+        display: inline-block;
+        max-width: 30%;
+        margin: 5px;
+    }
+    .coll-2 {
+        position: relative;
+        display: inline-block;
+        max-width: 65%;
+        bottom: 490px;
+       
+    }
+    .wrapper {
+        background-color: rgb(237, 100, 111);
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: inherit;
+        min-width: 5000px;
+    }
+    .edit {
+        color: #5555 ;
+    }
+    .adress_containt {
+        background-color: rgb(237, 100, 111);
+    }

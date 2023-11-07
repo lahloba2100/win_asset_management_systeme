@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+<div id="assettransfer-update" style="direction: rtl;" class="main container">
+    <div class="col-md-12 content-wrapper first_container">
+        <div class="second_container">
+            <div class="adress_name">
+                <h2>تحويل الاصول</h2>
+                <hr>
+            </div>
+
+            <!-- assettransfer_form.html -->
+
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- بيانات التحويل -->
+                <details open="">
+                    <summary class="adress_header">بيانات التحويل</summary>
+                    <div class="invoice_feild table-container">
+                        <table class="table_invoice">
+                            <thead class="table_header">
+                                <tr>
+                                   <th></th>
+                                    <th>رقم الاصل</th>
+                                    <th>الفرع المصدر</th>
+                                    <th>الفرع الهدف</th>
+                                    <th>تاريخ التحويل</th>
+                                    <th>البيان</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table_body">
+                                <tr>
+                                   <td>{{ form.id }}</td>
+                                    <td>{{ form.asset }}</td>
+                                    <td>{{ form.source_branch }}</td>
+                                    <td>{{ form.destination_branch }}</td>
+                                    <td>{{ form.transfer_date }}</td>
+                                    <td>{{ form.transfer_title }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- بيانات الاصل -->
+                <details open="">
+                    <summary class="adress_header">بيانات الاصل</summary>
+                    <div class="table_feild table-container">
+                         <table class="table_items table_destruction uii my-custom-table">
+                            <thead class="table_header">
+                                <tr>
+                                    
+                                    <th>الاصل</th>
+                                    <th>الفرع المصدر</th>
+                                    <th>الفرع الهدف</th>
+                                    <th>تاريخ التحويل</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table_body">
+                            {{ Transferasset.management_form }}
+                            {% for form in Transferasset.forms %}
+                            <tr class="{% cycle row1 row2 %}  invoice_field sticky-row table_body_additiontax">
+   
+                                <td class="disabled">{{ form.asset }}
+                                
+                                 {# Include the hidden fields in the form #}
+                                    {% if forloop.first %}
+                                    {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {{ field_addition.errors.as_ul }}
+                                
+                                </td>
+                                <td class="">{{ form.source_branch_asset }}</td>
+                                <td class="">{{ form.destination_branch_asset }}</td>
+                                <td class="">{{ form.transfer_date_asset }}</td>
+                                <td class=""></td>
+                            </tr>
+                       
+                                {% endfor %}     
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- بيانات الاهلاك -->
+                <!-- بيانات الاهلاك -->
+                <details open="">
+                    <summary class="adress_header">بيانات الاهلاك</summary>
+                <table class="table_items table_destruction uii my-custom-table">
+                    <thead>
+                        <tr class="invoice_field table_header">
+                            <th></th>
+                            <th>الأصل</th>
+                            <th>رقم الاهلاك</th>
+                            <th>الفرع المصدر</th>
+                            <th>الفرع الهدف</th>
+                            <th>تاريخ التحويل</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ TransferdestructionDetails.management_form }}
+                        {% for form in TransferdestructionDetails.forms %}
+                        <tr class="{% cycle row1 row2 %} formset_transferdestruction invoice_field sticky-row table_body_additiontax">
+                            <td class="">
+                                {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                                {% endfor %}
+                                {{ field_addition.errors.as_ul }}
+                                {{ form.transfer_destruction }}
+                            </td>
+
+                            <td class="disabled">{{ form.asset }}</td>
+                            <td class="">{{ form.destruction }}</td>
+                            <td class="">{{ form.source_branch_destruction }}</td>
+                            <td class="">{{ form.destination_branch_destruction }}</td>
+                            <td class="">{{ form.transfer_date_destruction }}</td>
+                            <td class="">{{ form.DELETE }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                </details>
+
+                <input type="hidden" name="action" value="update">
+                <input type="submit" class="btn btn-primary row_empty" value="تحديث">
+                {% if object %}
+                    <a class="add-row button" href="{% url 'generate_tranfer_report' transfer_destruction_id=object.pk %}" target="_blank"> طباعة </a>
+                {% else %}
+        
+                {% endif %}
+                <a id="removeRoww" class="row_empty" href="javascript:void(0)">الغاء الصفوف</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

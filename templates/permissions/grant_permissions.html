@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}منح صلاحيات الفروع{% endblock %}
+{% block content %}
+<style>
+    /* تصغير حجم المحتوى */
+    .container_invoice {
+        max-width: 800px; /* تحديد عرض الحاوية الرئيسية */
+        margin: 0 auto; /* تحديد هوامش الحاوية للتموضع في الوسط */
+        overflow: auto; /* إضافة شريط تمرير عند الضرورة */
+        display: flex; /* عرض العناصر بنمط الفليكس */
+        flex-direction: row; /* ترتيب العناصر في الصفوف */
+    }
+
+    .container_with_title {
+        margin-top: 10px; /* تباعد بين الكونتينرين */
+        flex: 1; /* التمدد ليملأ المساحة */
+        padding: 20px; /* هامش داخلي للعناصر في الكونتينر */
+    }
+
+    .container_with_title h5 {
+        font-size: 18px; /* حجم العنوان */
+        margin-bottom: 10px; /* تباعد بين العنوان والمحتوى */
+    }
+</style>
+
+<div class="container_invoice">
+    <div style="direction: rtl;" class="col-12">
+        <button class="btn btn-success"  id="grant-branches-button">شاشة صلاحيات الفروع</button>
+        <button class="btn btn-success"  id="grant-screens-button">شاشة صلاحيات الشاشات</button>
+ 
+        <div class="container_with_title" id="branch-div">
+            <h5 class="adress_name">منح صلاحيات الفروع:</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>منح صلاحيات الفروع</h2>
+                    <form method="post" action="{% url 'grant-branch-permissions' %}" id="branches-form">
+                        {% csrf_token %}
+                        {{ form_add_permission_pranches.as_p }}
+                        <button type="submit" class="btn btn-primary" id="grant-branches-button">منح صلاحيات الفروع</button>
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+                    <h2>عرض صلاحيات الفروع</h2>
+                    <form method="post" action="{% url 'grant-branch-permissions' %}">
+                        {% csrf_token %}
+                        {{form_view_permission_pranches.user}}
+                        <p></p>
+                        <ul class=""><li>This field is required.</li></ul> 
+                        <br>
+                        <ul>
+                            {% for permission in form_view_permission_pranches.branches %}
+                            <li>{{ permission }}</li>
+                            {% endfor %}
+                        </ul>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary" data-form="view-branches">عرض</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- إضافة الفورم لعرض شاشات المستخدم -->
+        <div class="container_with_title" id="screen-div">
+            <h5 class="adress_name">منح صلاحيات الشاشات:</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>منح صلاحيات الشاشات</h2>
+                    <form method="post" action="{% url 'grant-permissions-screen' %}" id="screens-form">
+                        {% csrf_token %}
+                        {{ form_add_permission_screen.as_p }}
+                        <button type="submit" class="btn btn-primary" data-form="screens">منح صلاحيات الشاشات</button>
+                    </form>
+                </div>
+                <div class="mt-6">
+                    <h2>الشاشات المتاحة للمستخدم المحدد:</h2>
+                    <form method="post" action="{% url 'grant-permissions-screen' %}">
+                        {% csrf_token %}
+                        {{form_view_permission_screen.user}}
+                        <p></p>
+                        <ul class=""><li>This field is required.</li></ul> 
+                        <ul class="" style="font-weight: bold;"><li>الشاشات لمتاحة:</li></ul>
+                        <br>
+                        <ul>
+                            {% for permission in form_view_permission_screen.permissions %}
+                            <li>{{ permission }}</li>
+                            {% endfor %}
+                        </ul>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary" data-form="view-screens">عرض</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- نهاية الفورم -->
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // الدالة لعرض نموذج الفروع
+        function showBranches() {
+            document.getElementById('branch-div').style.display = 'block';
+            document.getElementById('screen-div').style.display = 'none';
+            // حفظ الاختيار في Local Storage
+            localStorage.setItem('selectedForm', 'branches');
+        }
+
+        // الدالة لعرض نموذج الشاشات
+        function showScreens() {
+            document.getElementById('branch-div').style.display = 'none';
+            document.getElementById('screen-div').style.display = 'block';
+            // حفظ الاختيار في Local Storage
+            localStorage.setItem('selectedForm', 'screens');
+        }
+
+        // الزر الخاص بفورم الفروع
+        const grantBranchesButton = document.getElementById('grant-branches-button');
+        // الزر الخاص بفورم الشاشات
+        const grantScreensButton = document.getElementById('grant-screens-button');
+
+        // استمع للنقرات على الأزرار لتشغيل الدوال المحددة
+        grantBranchesButton.addEventListener('click', showBranches);
+        grantScreensButton.addEventListener('click', showScreens);
+
+        // استعادة الاختيار عند تحميل الصفحة
+        const selectedForm = localStorage.getItem('selectedForm');
+        if (selectedForm === 'branches') {
+            showBranches();
+        } else if (selectedForm === 'screens') {
+            showScreens();
+        }
+    });
+</script>
+
+
+
+
+
+
+{% endblock %}

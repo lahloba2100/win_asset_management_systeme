@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "asset_management",
+			"path": "asset_management"
+		}
+	],
+	"settings": {}
+}

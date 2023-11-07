@@ -1,0 +1,55 @@
+<div class="toolbar">
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <ul class="navbar-nav">
+
+      <!-- مجموعة العمليات -->
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          شاشة العمليات
+        </a>
+        <div class="dropdown-menu">
+          <a href="{% url 'invoice-list' %}" class="dropdown-item">الفواتير</a>
+          <a href="{% url 'destruction-list' %}" class="dropdown-item">الاهلاك</a>
+          <a href="{% url 'asset_transfers' %}" class="dropdown-item">التحويل</a>
+        </div>
+      </li>
+
+      <!-- مجموعة الضبط -->
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          شاشة الضبط
+        </a>
+        <div class="dropdown-menu">
+          <a href="{% url 'systemadditiontax-list' %}" class="dropdown-item">ضريبة الاضافة</a>
+          <a href="{% url 'systemminustax-list' %}" class="dropdown-item">ضريبة الخصم</a>
+          <a href="{% url 'systemexpensescost-list' %}" class="dropdown-item">المصروفات</a>
+          <a href="{% url 'group-list' %}" class="dropdown-item">اضافة تصنيف الاصول</a>
+          <a href="{% url 'branch-list' %}" class="dropdown-item">اضافة الفروع</a>
+        </div>
+      </li>
+
+      <!-- مجموعة التقارير -->
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          شاشة التقارير
+        </a>
+        <div class="dropdown-menu">
+          <a href="{% url 'asset_report' %}" class="dropdown-item">تقرير الاصول</a>
+          <a href="{% url 'destruction_report' %}" class="dropdown-item">تقرير الاهلاك</a>
+        </div>
+      </li>
+
+      <!-- مجموعة المستخدمين والصلاحيات -->
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          شاشة المستخدمين والصلاحيات
+        </a>
+        <div class="dropdown-menu">
+          <a href="{% url 'signup' %}" class="dropdown-item">تسجيل مستخدم</a>
+          <a href="{% url 'logout' %}" class="dropdown-item">تسجيل الخروج</a>
+          <a href="{% url 'grant-branch-permissions' %}" class="dropdown-item">الصلاحيات</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</div>

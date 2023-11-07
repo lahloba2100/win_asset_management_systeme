@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+{% block content %}
+<div style="direction: rtl;" class="main container">
+    <div class="col-md-12 content-wrapper first_container">
+        <div class="second_container">
+            <div class="adress_name">
+               
+                <h2>تقرير الأصول</h2>
+                <hr>
+            </div>
+             <form method="get" action="{% url 'generate_reports_assets_report' %}">
+           {% csrf_token %}
+       
+         <table class="table_invoice">
+                            <thead class="table_header">
+                                <tr>
+                                    <th>تاريخ الشراء من</th>
+                                    <th>تاريخ الشراء الي</th>
+                                    <th>التصنيف</th>
+                                    <th>الفرع</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody class="table_body">
+                                <tr >
+                                
+                                    <td>{{ form.start_date }}</td>
+                                    <td>{{ form.end_date }}</td>
+                                    <td>{{ form.asset_group }}</td>
+                                    <td>{{form.branch}}</td>
+                                  
+                                </tr>
+                            </tbody>
+                        </table>
+        <button type="submit">اعرض التقرير</button>
+       
+        
+       
+    </form>
+
+   
+
+        </div>
+    </div>
+</div>
+   
+{% endblock %}

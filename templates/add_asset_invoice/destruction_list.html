@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}قائمة الأهلاك{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="direction: rtl;" class="col-12 container_invoice">
+        <div class="content-wrapper p-5">
+            <h5 class="adress_name">قائمة الأهلاك:</h5>
+            <form method="GET">
+                <label for="branch">اختر الفرع:</label>
+                <select id="branch" name="branch">
+                    <option value="">الكل</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.id }}" {% if branch.id == selected_branch %}selected{% endif %}>{{ branch.branch_name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">عرض</button>
+            </form>
+            <table class="table-items">
+                <tr>
+                    <th>رقم الفاتورة</th>
+                    <th>رقم الأصل</th>
+                    <th>اسم الأصل</th>
+                    <th>التصنيف</th>
+                    <th>البيان</th>
+                    <th>العدد</th>
+                    <th>سعر الوحدة</th>
+                    <th>الاجمالي</th>
+                    <th>الفرع</th>
+                    <th>اعتماد الأهلاك</th>
+                    <th>عدد</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.invoice_number }}</td>
+                    <td>{{ item.asset_number }}</td>
+                    <td>{{ item.asset_name }}</td>
+                    <td>{{ item.asset_group }}</td>
+                    <td>{{ item.asset_description }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>{{ item.price }}</td>
+                    
+                    <td>{{ item.asset_price }}</td>
+                    <td>{{ item.branch_name }}</td>
+                   
+                    <td><a href="{% url 'destruction-update' item.pk %}">اعتماد الأهلاك</a></td>
+                     <td>{{ item.total_destruction }}</td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10">لا يوجد أصناف.</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

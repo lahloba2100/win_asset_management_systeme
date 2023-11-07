@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}اهلاك الأصول{% endblock %}
+{% block content %}
+<div style="direction: rtl;" class="main container">
+    <div class="col-md-12 content-wrapper first_container">
+        <div class="second_container">
+            <div class="adress_name">
+                <h2>الاهلاك</h2>
+                <hr>
+            </div>
+            <form  action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+               
+            <details open="" class="adress_details">
+  <summary class="adress_header">بيانات الاصل</summary>
+  <div class="my-custom-table-container">
+    <table class="table_invoice table_items uii my-custom-table">
+                        <thead>
+                            <tr class="table_header">
+                                <th>رقم الفاتورة</th>
+                                <th>رقم الاصل</th>
+                                <th>اسم الاصل</th>
+                                <th>البيان</th>
+                                 
+                                <th>العدد</th>
+                                <th>سعر الوحدة</th>
+                                <th>اجمالي السعر</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="table_body">
+                                <td class="disabled"> {{ form.invoice_number }}</td>
+                                <td class="disabled"> {{ form.asset_number }}</td>
+                                <td class="disabled">{{ form.asset_name }}</td>
+                                
+                                <td class="disabled">{{ form.asset_description }}</td>
+                                
+                                <td class="disabled">{{ form.count }}</td>
+                                <td class="disabled">{{ form.price }}</td>
+                                <td class="disabled">{{ form.asset_price }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+
+                 <details open="" class="adress_details">
+                    <summary class="adress_header">بيانات الاهلاك</summary>
+                 
+
+                    <table class="table_invoice  ">
+                    
+                        <thead>
+                       
+                            <tr class="table_header">
+                                <th>تاريخ بداية الاهلاك</th>
+                                <th>تاريخ نهاية الاهلاك</th>
+                                <th>نسبة الاهلاك</th>
+                                <th>قيمة الاهلاك</th>
+                                 <th> الفرع</th>
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="table_body">
+                                <td > {{ form.destruction_start_month }}</td>
+                                <td > {{ form.destruction_end_month }}</td>
+                                <td >{{ form.destruction_percent }}</td>
+                                <td >{{ form.destruction_value }}</td>
+                                <td >{{ form.branch_name }}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+               
+                <div class="table_feild table-container">
+                <a id="removeRow" class="row_empty" href="javascript:void(0)">الغاء الصفوف </a>
+                    <a id="addDestructionRow" class="calc_add_row" href="javascript:void(0)">توليد الصفوف</a>
+                    <a id="addDestructionRowOne" class="calc_add_row_one" href="javascript:void(0)">توليد صف واحد</a>
+                    <a type="button" id="calcButton" class="calc_button">حساب الاهلاك</a>
+                    <table class="table_items table_destruction">
+                        {{ destruction.management_form }}
+                        {% for form in destruction.forms %}
+                        {% if forloop.first %}
+                        <thead>
+                            <tr class='invoice_field table_header'>
+                                <th>#</th> {# عمود العد التلقائي #}
+                                {% for field in form.visible_fields %}
+                                <th>{{ field.label|capfirst }}</th>
+                                {% endfor %}
+                              
+                            </tr>
+                        </thead>
+                        {% endif %}
+                        
+                        <tr class="{% cycle row1 row2 %}  invoice_field sticky-row table_body">
+                            <td>{{ forloop.counter }}</td> {# قيمة العد التلقائي #}
+                            {% for field in form.visible_fields %}
+                            <td>
+                                {# Include the hidden fields in the form #}
+                                {% if forloop.first %}
+                                {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                                {% endfor %}
+                                {% endif %}
+                                {{ field.errors.as_ul }}
+                                {{ field }}
+                            </td>
+                            
+                            {% endfor %}
+                            
+                        </tr>
+                        
+                        {% endfor %}
+                    </table>
+                </div>
+
+                    
+                <input id="removeRow" class="row_empty" type="submit" value="حفظ" />
+                {% if object %}
+                <a class="add-row button" href="{% url 'generate_destruction_report' asset_item_id=object.pk %}" target="_blank"> طباعة </a>
+                {% else %}
+    
+                {% endif %}
+                
+                <a href="{% url 'destruction-list' %}">الانتقال الى القائمة</a>
+            </form>
+                   
+        </div>
+    </div>
+</div>
+   
+{% endblock %}

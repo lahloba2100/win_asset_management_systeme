@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+{% block content %}
+<div style="direction: rtl;" class="wrapper">
+    
+    <div  class="content-wrapper p-5">
+    <h2></h2>
+    <hr>
+   
+        <form action="" method="post">{% csrf_token %}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
+            <input type="submit" value="Confirm"/>
+        </form>
+    </div>
+    </div>
+{% endblock %}

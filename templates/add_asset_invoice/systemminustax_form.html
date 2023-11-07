@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+{% block content %}
+<div style="direction: rtl;" class="main  container">
+    <div class="col-md-12 content-wrapper ">
+        <div class="adress_name">
+            <h2 class="adress_name">اضافة ضريبة جديد </h2>
+            <hr>
+        </div>
+        <form  action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- url 'invoice-update' invoice.pk -->
+            <!--"{% url 'invoice-list' %}"-->
+            <input class="add-row button" type="submit" value="حفظ"/>
+            <a href="{% url 'systemminustax-list' %}">الانتقال الي القائمة</a>
+        </form>
+    </div>
+</div>
+   
+{% endblock %}

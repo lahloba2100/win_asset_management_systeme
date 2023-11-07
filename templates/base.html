@@ -1,0 +1,925 @@
+{% load static %}
+<!DOCTYPE html>
+<html  lang="ar">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <title>AssetManagementSystem</title>
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte_ar.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="{% static 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">  
+  
+  <!-- disabled table -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
+    
+    
+  
+  </head>
+  <body dir="rtl" class="hold-transition sidebar-mini">
+{% include 'parts/nav.html' %}
+{% include 'parts/toolbar.html' %}
+<!--{% include 'parts/sidbar.html' %}-->
+{% block content %}
+
+{% endblock %}
+{% include 'parts/footer.html' %}
+</div>
+<!-- ./wrapper -->
+
+
+<!-- REQUIRED SCRIPTS -->
+<!--<script src="{% static 'plugins/jquery_datepacker/jquery_ui.js' %}"></script>-->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<!-- OPTIONAL SCRIPTS -->
+
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<!-- ضمن القالب -->
+
+
+
+<script type="text/javascript">
+  /*  خاص بالحذف والاضافة للصفوف الاصناف
+  $(document).ready(function() {
+  var max_forms = 10; // الحد الأقصى لعدد الصفوف
+  var form_count = $("#id_items-TOTAL_FORMS").val(); // العدد الحالي للصفوف
+  $("#add_asset").click(function() {
+    if (form_count < max_forms) {
+      var last_row = $("#assets_table tbody tr:last-child");
+      var new_row = last_row.clone();
+      new_row.find("input[type=text]").val(""); // مسح القيم السابقة
+      new_row.find("select").val(""); // مسح القيم السابقة
+      last_row.after(new_row);
+      form_count++; // زيادة العدد بمقدار 1
+      $("#id_items-TOTAL_FORMS").val(form_count); // تحديث القيمة في management_form
+    } else {
+      alert("Reached maximum number of forms.");
+    }
+    });
+   $("#assets_table tbody").on("click", ".delete-row", function() {
+      
+      $(this).closest("tr").remove();
+       form_count--; // تخفيض العدد بمقدار 1
+    $("#id_items-TOTAL_FORMS").val(form_count); // تحديث القيمة في management_form
+    });
+  });*/
+
+</script>
+
+
+<script type="text/javascript">
+  /* خاص بجمع ضريبة الاضافة*/
+  $(document).on('keyup change', '.formset_row_additiontax select, .formset_row_additiontax input', function() {
+    var total_value = 0;
+    $('.formset_row_additiontax').each(function() {
+      var row_value_serch = $(this).find("input[name$='value_tax_increase']").val();
+      var addition_tax = $(this).find("select[name$='addition_tax']").val();
+      if (addition_tax) {
+        if ($.isNumeric(row_value_serch)) {
+          var row_value = parseFloat(row_value_serch);
+          total_value += row_value;
+        }
+      }
+    });
+    $("#id_total_addition_tax").val(total_value);
+  });
+
+</script>
+<script type="text/javascript">
+  /* خاص بجمع ضريبة الخصم*/
+  $(document).on('keyup change', '.formset_row_minustax select, .formset_row_minustax input', function() {
+    var total_value = 0;
+    $('.formset_row_minustax').each(function() {
+      var row_value_serch = $(this).find("input[name$='value_tax_decrease']").val();
+      var minus_tax = $(this).find("select[name$='minus_tax']").val();
+      if (minus_tax) {
+        if ($.isNumeric(row_value_serch)) {
+          var row_value = parseFloat(row_value_serch);
+          total_value += row_value;
+        }
+      }
+    });
+    $("#id_total_minus_tax").val(total_value);
+  });
+
+</script>
+
+<script type="text/javascript">
+  /* خاص بجمع المصروفات */
+  $(document).on('keyup change', '.formset_row_expensescost select, .formset_row_expensescost input', function() {
+    var total_value = 0;
+    $('.formset_row_expensescost').each(function() {
+      var row_value_serch = $(this).find("input[name$='value_expenses_cost']").val();
+      var expenses_cost = $(this).find("select[name$='expenses_cost']").val();
+      if (expenses_cost) {
+        if ($.isNumeric(row_value_serch)) {
+          var row_value = parseFloat(row_value_serch);
+          total_value += row_value;
+        }
+      }
+    });
+    $("#id_total_expences_cost").val(total_value);
+  });
+
+</script>
+
+<script type="text/javascript">
+  /*خاص بمعادلة باجمالي السعر */
+$(document).on('keyup change', '.formset_additems select, .formset_additems input', function() {
+  var total_price = 0;
+  $('.formset_additems').each(function() {
+    var row_price_str =  $(this).find("input[name$='asset_price']").val();
+    var asset_number = $(this).find("input[name$='asset_number']").val();
+    if (asset_number !== '') {
+      if ($.isNumeric(row_price_str)) {
+        var row_price = parseFloat(row_price_str);
+        total_price += row_price;
+         
+      }
+    }
+    
+  });
+  $("#id_total_price").val(total_price);
+  });
+</script>
+
+<script type="text/javascript">
+  /*خاص بمعادلة باجمالي التكلفة */
+/*  اجمالي التكلفة = اجمالي السعر+ ضريبة الاضافة -ضريبة الخصم-المصروفات  */
+  $(document).on('keyup change', '.formset_row_additiontax select, .formset_row_additiontax input', function() {
+    calculateTotalCost();
+  });
+  $(document).on('keyup change', '.formset_row_minustax select, .formset_row_minustax input', function() {
+    calculateTotalCost();
+  });
+   $(document).on('keyup change', '.formset_row_expensescost select, .formset_row_expensescost input', function() {
+    calculateTotalCost();
+  });
+   $(document).on('keyup change', '.formset_additems select, .formset_additems input', function() {
+    calculateTotalCost();
+  });
+  $(document).on('keyup change', '#id_total_price, #id_total_minus_tax, #id_total_expences_cost,#id_amount_paid', function() {
+    calculateTotalCost();
+  });
+
+  function calculateTotalCost() {
+    var total_price = parseFloat($("#id_total_price").val()) || 0;
+    var addition_tax = 0;
+    $('.formset_row_additiontax').each(function() {
+      var row_value_serch = $(this).find("input[name$='value_tax_increase']").val();
+      var selected_tax = $(this).find("select[name$='addition_tax']").val();
+      if (selected_tax && $.isNumeric(row_value_serch)) {
+        addition_tax += parseFloat(row_value_serch);
+      }
+    });
+    var minus_tax = parseFloat($("#id_total_minus_tax").val()) || 0;
+    var expenses = parseFloat($("#id_total_expences_cost").val()) || 0;
+    var amount_paid = parseFloat($("#id_amount_paid").val()) || 0;
+
+    /*var total_cost = total_price + addition_tax + expenses - minus_tax ;
+    var remaining_balance = total_price + addition_tax + expenses- minus_tax -amount_paid;*/
+    var total_cost = total_price - minus_tax ;
+    var remaining_balance = total_price - minus_tax -amount_paid;
+    $("#id_total_invoice_cost").val(total_cost);
+    $("#id_remaining_balance").val(remaining_balance);
+  }
+</script>
+
+<script type="text/javascript">
+
+ /*خاص بالضريبة الاضافة واظهار النسبة*/
+  $(document).ready(function() {
+  var additionTypeSelect = $("#id_addition_type");
+
+  var percentField = $("#id_percent_addition_tax");
+  var valueField = $("#id_value_addition_tax");
+  var choiceField = $("#id_choice_field_coast");
+
+  var percentLabel = $("label[for='id_percent_addition_tax']");
+  var valueLabel = $("label[for='id_value_addition_tax']");
+  var choiceLabel = $("label[for='id_choice_field_coast']");
+
+  function toggleFields() {
+    if (additionTypeSelect.val() === "percent") {
+      percentField.show();
+      valueField.hide();
+      percentLabel.show();
+      valueLabel.hide();
+
+      choiceField.show();
+      choiceLabel.show();
+    } else if (additionTypeSelect.val() === "value") {
+      percentField.hide();
+      valueField.show();
+      percentLabel.hide();
+      valueLabel.show();
+
+      choiceField.hide();
+      choiceLabel.hide();
+    }
+  }
+
+  additionTypeSelect.on("change", toggleFields);
+
+  toggleFields();
+  });
+
+</script>
+
+
+<script type="text/javascript">
+  /*خاص بالضريبة الخصم واظهار النسبة*/
+
+  $(document).ready(function() {
+    var additionTypeSelect = $("#id_minus_type");
+
+    var percentField = $("#id_percent_minus_tax");
+    var valueField = $("#id_value_minus_tax");
+    var choiceField = $("#id_choice_field_coast");
+
+    var percentLabel = $("label[for='id_percent_minus_tax']");
+    var valueLabel = $("label[for='id_value_minus_tax']");
+    var choiceLabel = $("label[for='id_choice_field_coast']");
+
+    function toggleFields() {
+      if (additionTypeSelect.val() === "percent") {
+        percentField.show();
+        valueField.hide();
+        percentLabel.show();
+        valueLabel.hide();
+
+        choiceField.show();
+        choiceLabel.show();
+      } else if (additionTypeSelect.val() === "value") {
+        percentField.hide();
+        valueField.show();
+        percentLabel.hide();
+        valueLabel.show();
+
+        choiceField.hide();
+        choiceLabel.hide();
+      }
+    }
+
+    additionTypeSelect.on("change", toggleFields);
+
+    toggleFields();
+  });
+
+</script>
+
+<script type="text/javascript">
+  /*  خاص بضرب سعر الوحدة في العدد */
+  $(document).on('keyup', '.formset_additems', function() {
+    var count = parseFloat($(this).find("input[name$='count']").val());
+    var price = parseFloat($(this).find("input[name$='price']").val());
+    var asset_price = count * price;
+    $(this).find("input[name$='asset_price']").val(asset_price);
+  });
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'formset/jquery.formset.js' %}"></script>
+
+<script type="text/javascript">
+  /*اضافة صفوف في الفاتورة ضريبة الاضافاة*/
+      $('.formset_row_additiontax').formset({
+          addText:'<a class="add-row addText button">اضافة</a>',
+          deleteText: 'حذف',
+          prefix: 'additiontax_set'
+      });
+</script>
+
+<script type="text/javascript">
+  /*اضافة صفوف في الفاتور ضريبة الخصم*/
+  $('.formset_row_minustax').formset({
+      addText:'<a class="add-row addText button">اضافة</a>',
+      deleteText: 'حذف',
+      prefix: 'minustax_set'
+  });
+</script>
+
+<script type="text/javascript">
+  /*اضافة صفوف في الفاتورة المصروف  */
+    $('.formset_row_expensescost').formset({
+        addText:'<a class="add-row addText button">اضافة</a>',
+        deleteText: 'حذف',
+        prefix: 'expensescost_set'
+    });
+</script>
+
+<script type="text/javascript">
+  /*اضافة صفوف اصناف الاصول*/
+    $('.formset_additems').formset({
+        addText:'<a class="add-row addText button"> اضافة اصل جديد </a>',
+        deleteText: 'حذف',
+        prefix: 'assetitems_set'
+    });
+  
+</script>
+    
+<script type="text/javascript">
+    /*اضافة صفوف الاهلاك */
+    $('.formset_destruction').formset({
+      addText: 'اضافة',
+      deleteText: 'حذف',
+      prefix: 'destruction_set',
+    
+    });
+
+    // إزالة الصف الإضافي عند البدء
+
+</script>
+
+<script type="text/javascript">
+      /*اضافة صffffffff3333333333333333333333333333333333333fffffffffffفوف التحويل */
+      $('.formset_ttransferasset').formset({
+        addText: 'اضافة',
+        deleteText: 'حذف',
+        prefix: 'transferasset_set',
+      
+      });
+
+      // إزالة الصف الإضافي عند البدء
+  
+</script>
+
+<script type="text/javascript">
+  /*اضافة صفوف الاهلاك */
+  $('.formset_transferdestruction').formset({
+    addText:'<a class="add-row addText button">اضافة</a>',
+    deleteText: 'del',
+    prefix: 'transferdestructiondetails_set',
+  
+  });
+
+  // إزالة الصف الإضافي عند البدء
+
+</script>
+  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+<script>
+    // كود حساب قيمة الاهلاك للصنف وليس لجدول الاهلاك//
+  $(document).ready(function() {
+    // تعريف الوظيفة التي ستقوم بحساب الاهلاك
+    function calculateDepreciation() {
+        var assetPrice = parseFloat($('#id_asset_price').val());
+        var destructionStartMonth = parseInt($('#id_destruction_start_month').val());
+        var destructionEndMonth = parseInt($('#id_destruction_end_month').val());
+        var percent = parseFloat($('#id_destruction_percent').val());
+        //var months = destructionEndMonth - destructionStartMonth + 1;//
+        //var depreciationValue = percent / months;//
+        var depreciationValue = assetPrice / ((1 / percent)*12);
+        // عرض قيمة الاهلاك في حقل الاهلاك
+        $('#id_destruction_value').val(depreciationValue.toFixed(2));
+    }
+
+    // التعامل مع حدث النقر على زر "Calc"
+    $('#calcButton').click(function() {
+        calculateDepreciation();
+    });
+  });
+</script>
+
+<script>
+  // كود حساب نهاية تاريخ الاهلاك للصنف وليس لجدول الاهلاك//
+  $(document).ready(function() {
+  // تعريف الوظيفة التي ستقوم بحساب نهاية الاهلاك
+  function calculateDepreciationEndDate() {
+    var destructionStartMonth = moment($('#id_destruction_start_month').val()); // تحويل تاريخ البداية إلى كائن moment
+    var assetPrice = parseFloat($('#id_asset_price').val());
+    var percent = parseFloat($('#id_destruction_percent').val());
+    //var months = 120;//
+    var months = (1 / percent)*12;
+    var destructionEndMonth = moment(destructionStartMonth).add(months, 'months'); // إضافة عدد الأشهر إلى تاريخ البداية
+    
+    // استخدام مكتبة moment.js لتنسيق التاريخ
+    var formattedEndDate = destructionEndMonth.format('YYYY-MM-DD');
+    
+    // عرض تاريخ نهاية الاهلاك في حقل النموذج
+    $('#id_destruction_end_month').val(formattedEndDate);
+  }
+
+  // التعامل مع حدث النقر على زر "Calc"
+  $('#calcButton').click(function() {
+    calculateDepreciationEndDate();
+  });
+ });
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script>
+ //كود حساب جدول الاهلاك بداية التاريخ ونهايتة والنسبة والقيمة//
+  $(document).ready(function() {
+    $("#calcButton").click(function() {
+      
+      // تعيين القيم للحقول بشكل تلقائي
+      var startDate = moment($('#id_destruction_start_month').val()); // تحويل تاريخ البداية إلى كائن moment
+      var endDate = startDate.clone().add(1, 'month').subtract(1, 'day');
+      var percent = parseFloat($('#id_destruction_percent').val());
+      var value = parseFloat($('#id_destruction_value').val());
+      var currentStartDate = moment(startDate); // تحويل التاريخ إلى كائن moment
+      var branchName = $('#id_branch_name option:selected').text();
+
+      $(".table_destruction tbody tr").each(function(index) {
+        var row = $(this);
+        var currentEndDate = currentStartDate.clone().add(1, 'month').subtract(1, 'day'); // إضافة شهر وطرح يوم للحصول على نهاية الشهر
+
+        row.find('input[name$="destruction_start_month"][type$="text"]').val(currentStartDate.format("YYYY-MM-DD"));
+        row.find('input[name$="destruction_end_month"]').val(currentEndDate.format("YYYY-MM-DD"));
+        row.find('input[name$="destruction_percent"]').val(percent);
+        row.find('input[name$="destruction_value"]').val(value);
+
+        currentStartDate = currentStartDate.add(1, 'month'); // زيادة شهر للتاريخ التالي
+        row.find(`select[name$="branch_name"] option:contains('${branchName}')`).prop('selected', true);
+      });
+    });
+  });
+</script>
+
+
+
+
+  <script>
+    // كود اضافة مجموعة صفوص واحد مع العد التلقائي   //
+    $(document).ready(function() {
+      $("#addDestructionRow").click(function() {
+        var percent = parseFloat($('#id_destruction_percent').val());
+        var count_row = Math.ceil((1 / percent) * 12);
+        var exist_row = $(".table_destruction tbody tr").length; // عدد الصفوف الموجودة حاليًا
+        var remainingRows = count_row - exist_row; // عدد الصفوف المتبقية للإضافة
+        var formIdx = parseInt($("#id_destruction_set-TOTAL_FORMS").val());
+        var tableBody = $(".table_destruction tbody");
+
+        var branchOptions = ''; // سلسلة لتخزين الخيارات الديناميكية
+
+        $('#id_branch_name option').each(function() {
+          var branchValue = $(this).val();
+          var branchText = $(this).text();
+          branchOptions += `<option value="${branchValue}">${branchText}</option>`;
+        });
+
+        for (var i = 0; i < remainingRows; i++) {
+          var newRow = `
+            <tr class="formset_destruction">
+              <td>${exist_row + i + 1}</td> {# عمود العد التلقائي #}
+              <td><input type="text" name="destruction_set-${formIdx}-destruction_start_month" value="" placeholder="Start Date"></td>
+              <td><input type="text" name="destruction_set-${formIdx}-destruction_end_month" value="" placeholder="End Date"></td>
+              <td><input type="number" name="destruction_set-${formIdx}-destruction_percent" value="" step="any" placeholder="Percent"></td>
+              <td><input type="number" name="destruction_set-${formIdx}-destruction_value" value="" step="any" placeholder="Value"></td>
+              <td>
+                <select name="destruction_set-${formIdx}-branch_name" placeholder="Branch">
+                  
+                  ${branchOptions}
+                </select>
+              </td> {# حقل الفرع #}
+              <td><a class="delete-row" data-index="${formIdx}" href="javascript:void(0)">حذف</a></td>
+            </tr>`;
+          tableBody.append(newRow);
+          formIdx++;
+        }
+
+        $("#id_destruction_set-TOTAL_FORMS").val(formIdx);
+      });
+
+      // حذف الصف عند النقر على زر الحذف
+      $(".table_destruction").on("click", ".delete-row", function() {
+        var index = $(this).data("index");
+        $(this).closest("tr").remove();
+      });
+    });
+</script>
+
+<script>
+  // كود اضافة صف واحد مع العد التلقائي لاضافة صف واحد//
+  $(document).ready(function() {
+    $("#addDestructionRowOne").click(function() {
+      var formIdx = parseInt($("#id_destruction_set-TOTAL_FORMS").val());
+      var tableBody = $(".table_destruction tbody");
+      var exist_row = $(".table_destruction tbody tr").length; // عدد الصفوف الموجودة حاليًا
+      var branchOptions = ''; // سلسلة لتخزين الخيارات الديناميكية
+
+      $('#id_branch_name option').each(function() {
+        var branchValue = $(this).val();
+        var branchText = $(this).text();
+        branchOptions += `<option value="${branchValue}">${branchText}</option>`;
+      });
+
+      var newRow = `
+        <tr class="formset_destruction">
+          <td>${exist_row + 1}</td> {# عمود العد التلقائي #}
+          <td><input type="text" name="destruction_set-${formIdx}-destruction_start_month" value="" placeholder="Start Date"></td>
+          <td><input type="text" name="destruction_set-${formIdx}-destruction_end_month" value="" placeholder="End Date"></td>
+          <td><input type="number" name="destruction_set-${formIdx}-destruction_percent" value="" step="any" placeholder="Percent"></td>
+          <td><input type="number" name="destruction_set-${formIdx}-destruction_value" value="" step="any" placeholder="Value"></td>
+          <td>
+                <select name="destruction_set-${formIdx}-branch_name" placeholder="Branch">
+                  
+                  ${branchOptions}
+                </select>
+              </td> {# حقل الفرع #}
+          <td><a class="delete-row" data-index="${formIdx}" href="javascript:void(0)">حذف</a></td>
+        </tr>`;
+      tableBody.append(newRow);
+      formIdx++;
+
+      $("#id_destruction_set-TOTAL_FORMS").val(formIdx);
+    });
+
+    // حذف الصف عند النقر على زر الحذف
+    $(".table_destruction").on("click", ".delete-row", function() {
+      var index = $(this).data("index");
+      $(this).closest("tr").remove();
+    });
+  });
+</script>
+
+<script>
+  //   في جدول الاهلاك الغاء الحقول الفاضية//
+
+  $(document).ready(function() {
+      // تحميل الفرع المصدر عند بدء تحميل الصفحة
+      destruction_empty_row();
+    
+  
+      // حدث عند تغيير اختيار الأصل
+       $(".row_empty").click(function() {
+
+       
+        destruction_empty_row();
+      });
+    });
+      // دالة لتحميل الفرع المصدر
+      function destruction_empty_row() {
+       
+      $(".table_items tbody tr").each(function() {
+        var isEmpty = false;
+        
+        var emptyFields = ["destruction_percent", "destruction_value"]; // حقول البحث عنها
+
+        for (var i = 0; i < emptyFields.length; i++) {
+          var field = $(this).find('select[name$="' + emptyFields[i] + '"]');
+          if (field.val() === "") {
+            isEmpty = true;
+            break;
+          }
+        }
+       
+        if (isEmpty) {
+          $(this).remove();
+        }
+      });
+    };
+    
+</script>
+
+
+
+
+<script>
+  //  الغاء الحقول الفاضية في فاتورة المشتريات //
+
+  $(document).ready(function() {
+      // تحميل الفرع المصدر عند بدء تحميل الصفحة
+      //items_empty_row();
+    
+  
+      // حدث عند تغيير اختيار الأصل
+       $(".row_empty").click(function() {
+
+       
+        items_empty_row();
+      });
+    });
+      // دالة لتحميل الفرع المصدر
+      function items_empty_row() {
+       
+      $(".table_items tbody tr").each(function() {
+        var isEmpty = false;
+        var emptyFields = ["asset_number", "asset_name","asset_description", "branch_name","addition_tax","minus_tax", "expenses_cost"];
+
+        for (var i = 0; i < emptyFields.length; i++) {
+          var field = $(this).find('select[name$="' + emptyFields[i] + '"]');
+          if (field.val() === "") {
+            isEmpty = true;
+            //console.log(field)
+            break;
+          }
+        }
+       
+        if (isEmpty) {
+           console.log(this)
+          $(this).remove();
+         
+        }
+      });
+    };
+    
+</script>
+
+
+<script>
+ //  الغاء الحقول الفاضية في جدول التحويل//
+
+  $(document).ready(function() {
+      // تحميل الفرع المصدر عند بدء تحميل الصفحة
+      transfer_empty_row();
+    
+  
+      // حدث عند تغيير اختيار الأصل
+
+        $(".row_empty").click(function() {
+        transfer_empty_row();
+      });
+    });
+      // دالة لتح333333333333333333333333333333333333333333ميل الفرع المصدر
+      function transfer_empty_row() {
+      $(".table_destruction tbody tr").each(function() {
+        var isEmpty = false;
+        //,"destination_branch_asset", "source_branch_asset"
+        var emptyFields = ["destination_branch_destruction", "source_branch_destruction"];
+
+        for (var i = 0; i < emptyFields.length; i++) {
+          var field = $(this).find('select[name$="' + emptyFields[i] + '"]');
+          if (field.val() === "") {
+            isEmpty = true;
+            break;
+          }
+        }
+       
+        if (isEmpty) {
+          $(this).remove();
+        }
+      });
+    };
+    
+</script>
+
+ 
+<script>
+  $(document).ready(function() {
+    // تحميل الفرع المصدر عند بدء تحميل الصفحة
+    //loadSourceBranch();
+  $("#id_asset").trigger("change");
+
+    // حدث عند تغيير اختيار الأصل
+    $("#id_asset").on("change", function() {
+      loadSourceBranch();
+    });
+
+    // دالة لتحميل الفرع المصدر
+    function loadSourceBranch() {
+      var assetId = $("#id_asset").val();
+     
+      var sourceBranchSelect = $("select[id^='id_source_branch']");
+
+      // إفراغ حقل الفرع المصدر
+      sourceBranchSelect.empty().append('<option value="">---------</option>');
+
+      // إفراغ حقل الاهلاك في جميع الصفوف
+      $("select[id^='id_transferdestructiondetails_set-'][id$='-destruction']").empty().append('<option value="">---------</option>');
+
+      // إفراغ حقل الفرع المصدر في TransferAssetFormSet
+      $("select[id^='id_transferasset_set-'][id$='-source_branch_asset']").empty().append('<option value="">---------</option>');
+
+      // إفراغ حقل الفرع المصدر في TransferDestructionDetailsFormSet
+      $("select[id^='id_transferdestructiondetails_set-'][id$='-source_branch_destruction']").empty().append('<option value="">---------</option>');
+
+      // تعيين قيمة الأصل في TransferAssetFormSet و TransferDestructionDetailsFormSet
+      $("select[id^='id_transferasset_set-'][id$='-asset']").val(assetId);
+      $("select[id^='id_transferdestructiondetails_set-'][id$='-asset']").val(assetId);
+
+      if (assetId) {
+        // جلب الاهلاك المتعلق بالاصل المحدد
+        $.ajax({
+          url: '/get_asset_destruction/' + assetId + '/',
+          success: function(data) {
+            // ملء حقل الاهلاك بالبيانات المسترجعة
+            $.each(data, function(index, destruction) {
+              var destructionId = destruction.pk;
+              var destructionText =  destruction.destruction_start_month + ' ' + destruction.branch_name__branch_name + ' ' + destruction.destruction_value;
+
+              // التحقق من عدم وجود القيمة في حقل الاهلاك قبل تنفيذ عملية الملء
+              if ($("select[id^='id_transferdestructiondetails_set-'][id$='-destruction'] option[value='" + destructionId + "']").length === 0) {
+                // ملء حقل الاهلاك في TransferDestructionDetailsFormSet
+                $("select[id^='id_transferdestructiondetails_set-'][id$='-destruction']").append('<option value="' + destructionId + '">' + destructionText + '</option>');
+              }
+            });
+          }
+        });
+
+        // جلب الفروع المتعلقة بالاصل المحدد
+        var url = ($('#assettransfer-create').length > 0) ? '/get_asset_branch/' + assetId + '/' : '/get_asset_branchupdate/' + assetId + '/' +  transferId + '/';
+        $.ajax({
+          url: url,
+          success: function(data) {
+            // ملء حقل الفرع المصدر في TransferAssetFormSet و TransferDestructionDetailsFormSet
+            $.each(data, function(index, branch) {
+              var branchId = branch.pk;
+              var branchName = branch.branch_name;
+
+              // التحقق من عدم وجود القيمة في حقل الفرع المصدر قبل تنفيذ عملية الملء
+              if (sourceBranchSelect.find("option[value='" + branchId + "']").length === 0) {
+                // ملء حقل الفرع المصدر في TransferForm
+                sourceBranchSelect.append('<option value="' + branchId + '">' + branchName + '</option>');
+              }
+
+                // التحقق من عدم وجود القيمة في حقل الفرع المصدر في transfer قبل تنفيذ عملية الملء
+              //if ($("select[id^='id_source_branch'] option[value='" + branchId + "']").length === 0) {
+                  // ملء حقل الفرع المصدر في transfer
+                  //$("select[id^='id_source_branch']").append('<option value="' + branchId + '">' + branchName + '</option>');
+              //}
+
+
+              // التحقق من عدم وجود القيمة في حقل الفرع المصدر في TransferAssetFormSet قبل تنفيذ عملية الملء
+              if ($("select[id^='id_transferasset_set-'][id$='-source_branch_asset'] option[value='" + branchId + "']").length === 0) {
+                // ملء حقل الفرع المصدر في TransferAssetFormSet
+                $("select[id^='id_transferasset_set-'][id$='-source_branch_asset']").append('<option value="' + branchId + '">' + branchName + '</option>');
+              }
+
+              // التحقق من عدم وجود القيمة في حقل الفرع المصدر في TransferDestructionDetailsFormSet قبل تنفيذ عملية الملء
+              if ($("select[id^='id_transferdestructiondetails_set-'][id$='-source_branch_destruction'] option[value='" + branchId + "']").length === 0) {
+                // ملء حقل الفرع المصدر في TransferDestructionDetailsFormSet
+                $("select[id^='id_transferdestructiondetails_set-'][id$='-source_branch_destruction']").append('<option value="' + branchId + '">' + branchName + '</option>');
+              }
+
+              // تعيين قيمة الفرع المصدر في TransferAssetFormSet و TransferDestructionDetailsFormSet
+               $("select[id^='id_source_branch']").val(branchId);
+              $("select[id^='id_transferasset_set-'][id$='-source_branch_asset']").val(branchId);
+              $("select[id^='id_transferdestructiondetails_set-'][id$='-source_branch_destruction']").val(branchId);
+            });
+          }
+        });
+      }
+    }
+  });
+</script>
+
+
+<script>
+ 
+  // تاريخ تقرير الاصول
+    // اجلب حقل التاريخ
+    const startDateField = document.getElementById("id_start_date");
+    const endDateField = document.getElementById("id_end_date");
+
+    // استجابة للضغط على مفتاح Tab في حقل التاريخ
+    startDateField.addEventListener("keydown", function(event) {
+        if (event.key === "Tab") {
+            // قم بتحويل القيمة إلى الشكل المطلوب (yyyy-mm-dd)
+            const dateValue = startDateField.value;
+            if (dateValue.length === 8) {
+                const year = dateValue.substr(4, 4);
+                const month = dateValue.substr(2, 2);
+                const day = dateValue.substr(0, 2);
+                startDateField.value = `${year}-${month}-${day}`;
+            }
+            event.preventDefault();
+
+            // انتقل إلى الحقل التالي
+            endDateField.focus();
+        }
+    });
+
+    endDateField.addEventListener("keydown", function(event) {
+        if (event.key === "Tab") {
+            // قم بتحويل القيمة إلى الشكل المطلوب (yyyy-mm-dd)
+            const dateValue = endDateField.value;
+            if (dateValue.length === 8) {
+                const year = dateValue.substr(4, 4);
+                const month = dateValue.substr(2, 2);
+                const day = dateValue.substr(0, 2);
+                endDateField.value = `${year}-${month}-${day}`;
+            }
+            event.preventDefault();
+
+            // انتقل إلى الحقل التالي (إذا كان هناك حقل إضافي)
+            // الحقل التالي هو حقل الـ option في هذا السياق
+            document.querySelector('input[name="option"]').focus();
+        }
+    });
+</script>
+
+
+<script>
+  /* window.addEventListener('beforeunload', function (e) {
+        // تنفيذ تسجيل الخروج عند إغلاق الصفحة
+        fetch('/logout/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),  // تستخدم لحماية ضد هجمات CSRF
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.message);
+        })
+        .catch(error => {
+            console.error('حدث خطأ أثناء تسجيل الخروج', error);
+        });
+    });
+
+    // دالة للحصول على قيمة الرمز التعريفي CSRF من الكوكيز
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }*/
+</script>
+
+
+<script>
+  /*
+  const loginForm = document.getElementById('loginForm');
+  const dashboard = document.getElementById('dashboard');
+  const logoutButton = document.getElementById('logoutButton');
+
+  loginForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // منع إعادة تحميل الصفحة
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // يمكنك هنا إجراء فحص للمصادقة باستخدام سيرفر أو أي طريقة أخرى.
+      // في هذا المثال، سنستخدم اسم المستخدم "admin" وكلمة المرور "password".
+      if (username === 'admin' && password === 'password') {
+          // تسجيل الدخول بنجاح، عرض لوحة التحكم وإخفاء نموذج تسجيل الدخول
+          loginForm.style.display = 'none';
+          dashboard.style.display = 'block';
+      } else {
+          alert('فشل تسجيل الدخول. الرجاء المحاولة مرة أخرى.');
+      }
+  });
+
+  logoutButton.addEventListener('click', function() {
+      // عند النقر على زر تسجيل الخروج، يمكنك تنفيذ الإجراءات اللازمة لتسجيل الخروج هنا.
+      // في هذا المثال، سنقوم بإعادة تحميل الصفحة بمجرد النقر على زر تسجيل الخروج.
+      location.reload();
+  });*/
+</script>
+
+<script>
+  
+  window.addEventListener('beforeunload', function (e) {
+    // قم بإجراء تسجيل الخروج هنا
+    // استخدم طلب AJAX أو ارسال نموذج نموذج تسجيل الخروج إلى الخادم
+    // على سبيل المثال، يمكنك استخدام fetch() لإجراء طلب AJAX
+    // سيكون من الأفضل استخدام وسيلة آمنة لتنفيذ تسجيل الخروج (على سبيل المثال، اتصال HTTPS و CSRF tokens).
+    fetch('/logout/', {
+        method: 'POST', // يمكنك استخدام POST أو أي طريقة أخرى تحددها عمليتك
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken') // يجب تعويض 'csrftoken' بالاسم الصحيح للرمز CSRF الخاص بمشروعك
+        }
+    })
+});
+
+
+// دالة للحصول على قيمة رمز CSRF من الكوكيز
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        console.log('aaaaaaaaaaaaaaa',cookies)
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // تحقق من أن الكوكي يبدأ بالاسم المحدد
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+</script>
+
+
+  
+    

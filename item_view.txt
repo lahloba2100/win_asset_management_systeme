@@ -1,0 +1,133 @@
+@method_decorator(login_required, name='dispatch')
+class AssetItemsCreate(CreateView):
+    model = AssetInvoice
+    #form_class = AssetItemsForm  # تحديد النموذج
+    fields = ['invoice_number', 'invoice_date', 'company_name', 'supplier_phone', 'supplier_address', 
+              'total_price','total_addition_tax','total_minus_tax', 'total_expences_cost','total_invoice_cost', 'amount_paid', 'remaining_balance', 
+              'branch_name','invoice_image','invoice_pdf','supplier_name','id_card_number','commercial_record',
+              'tax_card','bank_account_number_to','bank_name_to','bank_account_number_from','bank_name_from']
+    
+    success_url = reverse_lazy('invoice-list')
+
+    
+   
+    ''' def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs(**kwargs)
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user  # تمرير معلومات المستخدم إلى النموذج
+        print('qqqqq',kwargs)  # طباعة قيمة kwargs
+        return kwargs'''
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        #user = self.request.user
+        #data = super(AssetItemsCreate, self).get_context_data(**kwargs)
+        #user = self.request.user  # معلومات المستخدم الحالي
+        #kwargs['user'] = user  # تمرير معلومات المستخدم كمعلمة إلى النموذج
+        #data['user'] = self.request.user  # تمرير معلومات المستخدم الحالي إلى النموذج
+       
+        #user = self.request.user.id
+        #form = AssetItemsForm(user=user)
+        '''user_id = self.request.user.id
+        user_permissions = UserBranchPermission.objects.filter(user_id=user_id)
+        user_branches = user_permissions.values_list('branch_id', flat=True)
+        
+        # استخدام قائمة الفروع لتحديث قائمة الفروع في نموذج AssetItemsForm
+        branch_choices = [(branch.id, branch.branch_name) for branch in Branch.objects.filter(id__in=user_branches)]
+        #data['branch_name'] = AssetItemsForm(branch_choices=branch_choices)  # تمرير قائمة الفروع
+        data['branch_name'] = AssetItemsForm(branch_choices=branch_choices)  # تمرير قائمة الفروع
+        print('branch_choices',branch_choices)
+        
+        
+        print('bbbbbbbbbb',user_id)'''
+        #user = self.request.user  # معلومات المستخدم الحالي
+        #data['user'] = user  # تمرير معلومات المستخدم كمعلمة إلى النموذج
+        
+        
+        '''user = self.request.user
+        user_permissions = UserBranchPermission.objects.filter(user=user)
+        user_branches = user_permissions.values_list('branch_id', flat=True)
+        
+       
+        
+        # عرض الفروع المتاحة للمستخدم
+        data['branches'] = Branch.objects.filter(id__in=user_branches)
+        
+        # استعلم عن الفرع المحدد إذا تم اختياره وقم بتصفية الفواتير بناءً على الفرع
+        selected_branch = self.request.GET.get('branch')
+        if selected_branch:
+            selected_branch = int(selected_branch)
+            if selected_branch in user_branches:
+                data['selected_branch'] = selected_branch
+                data['invoices'] = AssetItems.objects.filter(branch_name_id=selected_branch)
+            else:
+                # إذا كان المستخدم يحاول الوصول إلى فرع غير مصرح له، قم بتوجيهه إلى صفحة خطأ
+                return redirect('error-page')  # قم بتغيير 'error-page' إلى عنوان الصفحة التي تحتاج إلى توجيه المستخدم إليها
+        else:
+            data['selected_branch'] = None
+            data['invoices'] = AssetItems.objects.filter(branch_name_id__in=user_branches)
+            
+        print('data[branches]',data['branches'])'''
+
+        # استخدام self.request.user للحصول على المستخدم الحالي
+        user = self.request.user
+        user_id = user.id
+        print('user_id_view',user_id)
+        
+        # تمرير معرف المستخدم إلى نموذج النموذج كوسيط
+        data['user'] = AssetItemsForm(user=user_id)  # تمرير المستخدم هنا
+        #user = self.request.user.id
+        #form = AssetItemsForm(user=user)
+        #form = AssetItemsForm(instance=AssetItems, user=self.request.user)
+
+        #form = AssetItemsForm(user=self.request.user)
+
+        if self.request.POST:
+            #data['asset_items'] = AssetItemsFormSet(self.request.POST)
+            data['asset_items'] = AssetItemsFormSet(self.request.POST)  
+            data['addition_tax'] = AdditionTaxFormSet(self.request.POST)
+            data['minus_tax'] = MinusTaxFormSet(self.request.POST)
+            data['expenses_cost'] = ExpensesCostFormSet(self.request.POST)
+        else:
+            data['asset_items'] = AssetItemsFormSet()
+            data['addition_tax'] = AdditionTaxFormSet()
+            data['minus_tax'] = MinusTaxFormSet()
+            data['expenses_cost'] = ExpensesCostFormSet()
+            
+            
+
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        asset_items = context['asset_items']
+        addition_tax = context['addition_tax']
+        minus_tax = context['minus_tax']
+        expenses_cost = context['expenses_cost']
+        
+        with transaction.atomic():
+            self.object = form.save()
+
+            if addition_tax.is_valid():
+                addition_tax.instance = self.object
+                addition_tax.save()
+            else:
+                print('addition_tax',addition_tax.errors)
+                
+            if minus_tax.is_valid():
+                minus_tax.instance = self.object
+                minus_tax.save()
+                
+            if expenses_cost.is_valid():
+                expenses_cost.instance = self.object
+                expenses_cost.save()
+
+            if asset_items.is_valid():
+                asset_items.instance = self.object
+                asset_items.save()
+            else:
+                print('asset_items',asset_items.errors)
+
+           
+            
+        return super().form_valid(form)

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="direction: rtl;" class="col-10  container_group">
+        <div  class="content-wrapper p-5">
+            <h5 class="adress_name">قائمة التصنيف: </h5>
+            <ul  class="">
+                <table class="table-expe">
+                    <tr>
+                        <th>الكود</th>
+                        <th>الفرع</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                    </tr>
+                    {% for group in object_list %}
+                    <tr>
+                        <li class="row-1">
+                            <td><span>{{ group.pk }}</span></td>
+                            <td><span>{{ group.asset_group }}</span></td>
+                            
+                            <td><a class=" coll-1 edit" href="{% url 'asset_group_update' group.pk %}">تعديل</a></td>
+                            <td><a class="coll-2 delete" href="{% url 'asset_group_delete' group.pk %}">حذف</a></td>
+                        </li>
+                    </tr>
+                    {% empty %}
+                    <li>No profile yet.</li>
+                    {% endfor %}
+                </table>
+            </ul>
+            <p>
+                <a href="{% url 'asset_group' %}">اضافةتصنيف جديد </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

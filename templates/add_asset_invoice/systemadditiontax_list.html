@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="direction: rtl;" class="col-10  container_group">
+        <div  class="content-wrapper p-5">
+            <h5 class="adress_name">قائمة ضريبة الاضافة: </h5>
+            <ul  class="">
+               
+                <table class="table-expe">
+                    <tr>
+                        <th>الكود</th>
+                        <th>الاسم</th>
+                        <th>النسبة</th>
+                        <th>القيمة</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                    </tr>
+
+                    {% for field in object_list %}
+                    <tr>
+                    
+                        <li class="row-1">
+
+                            <td><span>{{field.pk }}</span></td>
+                            <td><span>{{ field.addition_tax }} </span></td>
+                            <td><span>{{field.percent_addition_tax }}</span></td>
+                            <td><span>{{ field.value_addition_tax }}</span></td>
+                            <td><a class=" coll-1 edit" href="{% url 'systemaddition_tax_update' field.pk %}">تعديل</a></td>
+                            <td><a class="coll-2 delete" href="{% url 'systemaddition_tax_delete' field.pk %}">حذف</a></td>
+                        </li>
+                    </tr>
+                        
+                    {% empty %}
+                    <li>No profile yet.</li>
+                    {% endfor %}
+                </table>
+                    
+            </ul>
+            <p>
+                <a href="{% url 'systemaddition_tax' %}">اضافة ضريبة جديد </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

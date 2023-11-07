@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="direction: rtl;" class="col-12  container_invoice">
+        <div  class="content-wrapper p-5">
+            <h5 class="adress_name">قائمة التحويل: </h5>
+            <ul>
+                <table class=" table-items">
+                    <tr>
+                        <th>الكود</th>
+                        <th>رقم الاصل</th>
+                        <th>الفرع المصدر</th>
+                        <th>الفرع الهدف</th>
+                        <th>تاريخ التحويل</th>
+                        <th>البيان</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                       
+                    </tr>
+                   
+                    <tr>
+                    
+                        <li  class="row-1">
+                         {% for transfer in object_list %}
+                            <td><span>{{ transfer.pk }} </span></td>
+                            <td><span>{{ transfer.asset }} </span></td>
+                            <td><span>{{ transfer.source_branch }} </span></td>
+                            <td><span>{{ transfer.destination_branch }} </span></td>
+                            <td><span>{{ transfer.transfer_date }} </span></td>
+                            <td><span>{{ transfer.transfer_title }} </span></td>
+                            
+                            <td><a class="coll-1 edit" href="{% url 'update_asset_transfer' transfer.pk %}">تعديل</a></td>
+                            <td><a class="coll-1 edit" href="{% url 'asset-transfer-delete' transfer.pk %}">حذف</a></td>
+                        </li>
+                    </tr>
+                    {% empty %}
+                    <li>No profile yet.</li>
+                    {% endfor %}
+                </table>
+
+            </ul>
+            <p>
+                <a href="{% url 'create_asset_transfer' %}">اضافة تحويل جديد</a>
+            </p>
+       
+        </div>
+    </div>
+</div>
+{% endblock %}
