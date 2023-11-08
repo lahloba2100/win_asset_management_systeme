@@ -15,6 +15,7 @@ from django import forms
 from .models import UserPermission
 
 
+
 class SystemMinusTaxForm(forms.ModelForm):
     
     class Meta:
@@ -537,14 +538,18 @@ class UserPermissionViewScreenForm(forms.Form):
         # تحديد جميع الخيارات تلقائيًا
         #self.fields['permissions'].initial = [str(permission[0]) for permission in screen_choices]
 
-    """def get_available_screen(self):
-        user = self.cleaned_data.get('user')
-        if user:
-            user_permissions = UserPermission.objects.filter(user=user)
-            return [permission.get_permission_display() for permission in user_permissions]  # استخدام get_FOO_display()
+from django.contrib.auth.forms import PasswordChangeForm
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # إلغاء قواعد معينة
+        self.fields['new_password1'].validators = [
+            # إضافة أي قواعد إضافية هنا إذا كنت ترغب
+        ]
 
-        return []"""
-
+        # يمكن إلغاء قواعد معينة من خلال تعيين قيمهم إلى مصفوفة فارغة
+        self.fields['new_password2'].validators = []  
 
 
     

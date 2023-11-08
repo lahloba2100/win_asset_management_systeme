@@ -1001,3 +1001,43 @@ def index(request):
 
 def permission_denied(request):
     return render(request, 'permissions/permission_denied.html')
+
+
+class UserListView(View):
+    def get(self, request):
+        users = User.objects.all()
+        return render(request, 'permissions/user_list.html', {'users': users})
+
+class UserDeleteView(View):
+    def get(self, request, user_id):
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            messages.error(request, 'المستخدم غير موجود.')
+            return redirect('user-list')
+        return render(request, 'permissions/user_delete_confirm.html', {'user': user})
+
+    def post(self, request, user_id):
+        try:
+            user = User.objects.get(id=user_id)
+            user.delete()
+            messages.success(request, 'تم حذف المستخدم بنجاح.')
+        except User.DoesNotExist:
+            messages.error(request, 'المستخدم غير موجود.')
+        return redirect('user-list')
+from .forms import CustomPasswordChangeForm
+class ChangePasswordView(View):
+    def get(self, request):
+        form = CustomPasswordChangeForm(request.user)
+        return render(request, 'permissions/change_password.html', {'form': form})
+
+    def post(self, request):
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # تحديث جلسة المستخدم لتجنب تسجيل الخروج
+            messages.success(request, 'تم تغيير كلمة المرور بنجاح.')
+            return redirect('change-password')
+        else:
+            messages.error(request, 'تعذر تغيير كلمة المرور. الرجاء التحقق من البيانات المدخلة.')
+        return render(request, 'permissions/change_password.html', {'form': form})

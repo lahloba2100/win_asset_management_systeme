@@ -87,6 +87,10 @@ urlpatterns = [
     
     path('igrant_permissions_screen/', HasPermission('screenViewPermission')(views.GrantScreenPermissionsView.as_view()), name='grant-permissions-screen'),
     path('igrant_permissions/', HasPermission('screenViewPermission')(views.GrantBranchPermissionsView.as_view()), name='grant-branch-permissions'),
+
+    path('user-list/', views.UserListView.as_view(), name='user-list'),
+    path('user-delete/<int:user_id>/', views.UserDeleteView.as_view(), name='user-delete'),
+    path('change-password/', views.ChangePasswordView.as_view(), name='change-password'),
 ]
 
 

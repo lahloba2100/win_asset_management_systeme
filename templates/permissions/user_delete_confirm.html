@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} صلاحيات الفروع{% endblock %}
+{% block content %}
+<div class="container"></div>
+    <div style="direction: rtl;" class="col-12 container_invoice">
+        <div class="content-wrapper p-5">
+            <h1>تأكيد حذف المستخدم</h1>
+            <p>هل أنت متأكد أنك ترغب في حذف المستخدم "{{ user.username }}"؟</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">حذف المستخدم</button>
+                <a href="{% url 'user-list' %}">العودة إلى قائمة المستخدمين</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
