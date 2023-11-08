@@ -540,16 +540,18 @@ class UserPermissionViewScreenForm(forms.Form):
 
 from django.contrib.auth.forms import PasswordChangeForm
 class CustomPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'old_password', 'new_password1', 'new_password2') 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
         # إلغاء قواعد معينة
-        self.fields['new_password1'].validators = [
-            # إضافة أي قواعد إضافية هنا إذا كنت ترغب
-        ]
+        self.fields['new_password1'].validators = []
+        # إضافة أي قواعد إضافية هنا إذا كنت ترغب
 
         # يمكن إلغاء قواعد معينة من خلال تعيين قيمهم إلى مصفوفة فارغة
-        self.fields['new_password2'].validators = []  
+        self.fields['new_password2'].validators = [] 
 
 
     
